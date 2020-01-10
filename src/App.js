@@ -1,25 +1,21 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { Layout, Typography } from 'antd';
+
+import PokemonList from 'containers/PokemonList';
+
+const { Header, Content } = Layout;
+const { Title } = Typography;
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout>
+      <Header>
+        <Title>POKEPEDIA</Title>
+      </Header>
+      <Content style={{ margin: '0 50px' }}>
+        <PokemonList />
+      </Content>
+    </Layout>
   );
 }
 
