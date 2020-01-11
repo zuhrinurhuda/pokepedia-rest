@@ -1,3 +1,6 @@
+# pokepedia
+The Pokedex is a web app designed to catalogue and provide information regarding the various species of Pokemon featured in the Pokemon video game, anime and manga series.
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
