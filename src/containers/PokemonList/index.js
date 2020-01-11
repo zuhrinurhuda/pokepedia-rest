@@ -1,61 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { Row, Col } from 'antd';
+import { createStructuredSelector } from 'reselect';
 
 import PokemonCard from 'components/PokemonCard';
+import { pokemonListRequested } from 'state/redux/pokemon/actions';
+import pokemonPageSelector from 'state/redux/pokemon/selectors';
 
-const dummy = [
-  {
-    id: 1,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 1,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 2,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 3,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 4,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 5,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 6,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  {
-    id: 7,
-    name: 'bulbasaur',
-    image: 'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png',
-    habitat: 'grassland',
-  },
-  
-];
+const PokemonList = props => {
+  const { fetchPokemonList, pokemon } = props;
+  const { pokemonList } = pokemon;
 
-const PokemonList = () => {
+  useEffect(() => {
+    fetchPokemonList({ limit: 18 });
+  }, []);
+
   return (
     <Row
       type="flex"
@@ -65,7 +25,7 @@ const PokemonList = () => {
         padding: '12px 0',
       }}
     >
-      {dummy.map(pokemon => (
+      {pokemonList.data.map(pokemon => (
         <Col
           xs={24}
           sm={12}
@@ -73,6 +33,7 @@ const PokemonList = () => {
           lg={6}
           xl={4}
           xxl={4}
+          key={pokemon.id}
           style={{
             paddingTop: 12,
             paddingBottom: 12,
@@ -85,6 +46,17 @@ const PokemonList = () => {
   );
 };
 
-PokemonList.propsTypes = {};
+const mapStateToProps = createStructuredSelector({
+  pokemon: pokemonPageSelector(),
+});
 
-export default PokemonList;
+const mapDispatchToProps = dispatch => ({
+  fetchPokemonList: params => dispatch(pokemonListRequested(params)),
+})
+
+PokemonList.propsTypes = {
+  fetchPokemonList: PropTypes.func.isRequired,
+  pokemon: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(PokemonList);
