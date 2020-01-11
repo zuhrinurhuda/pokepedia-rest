@@ -9,10 +9,10 @@ const { Title } = Typography;
 function App() {
   return (
     <Layout>
-      <Header>
+      <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
         <Title>POKEPEDIA</Title>
       </Header>
-      <Content style={{ margin: '0 50px' }}>
+      <Content style={{ margin: '0 50px', marginTop: 64  }}>
         <PokemonList />
       </Content>
     </Layout>
