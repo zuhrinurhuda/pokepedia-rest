@@ -10,6 +10,7 @@ const PokemonCard = props => {
     <Card
       hoverable
       key={pokemon.id}
+      loading={pokemon.isLoading}
       cover={
         <img alt={pokemon.name} src={pokemon.image} />
       }
