@@ -6,7 +6,8 @@ import {
   Col,
   Avatar,
   Typography,
-  Button
+  Button,
+  Skeleton,
 } from 'antd';
 
 import bodyBg from 'assets/images/body_bg.png';
@@ -35,66 +36,80 @@ const PokemonDetail = props => {
         }}
       >
         <Avatar
-          src={pokemonDetail.id &&
-            `${process.env.REACT_APP_IMAGE_URL}${pokemonDetail.id}.png`
+          src={
+            !pokemonDetail.isLoading &&
+            pokemonDetail.id &&
+              `${process.env.REACT_APP_IMAGE_URL}${pokemonDetail.id}.png`
           }
           size={96}
           style={{ background: 'white', marginTop: 24 }}
         />
         <Typography.Title level={3}>
-          {pokemonDetail.name}
+          {pokemonDetail.isLoading
+            ? 'Loading...'
+            : pokemonDetail.name
+          }
         </Typography.Title>
       </Row>
       <Row style={{ padding: 24 }}>
-        <Row>
-          <div>
-            <strong>Description</strong>
-          </div>
-          <p>
-             {pokemonDetail.flavor_text_entries.length 
-              && pokemonDetail.flavor_text_entries[1].flavor_text
-            }
-          </p>
-        </Row>
-        <Row>
-          <Col span={6}>
+        <Skeleton
+          active
+          loading={pokemonDetail.isLoading}
+          avatar={false}
+          paragraph={{ rows: 5 }}
+        >
+          <Row>
             <div>
-              <strong>Color</strong>
+              <strong>Description</strong>
             </div>
-            <p>{pokemonDetail.color.name}</p>
-          </Col>
-          <Col span={6}>
-            <div>
-              <strong>Shape</strong>
-            </div>
-            <p>{pokemonDetail.shape.name}</p>
-          </Col>
-          <Col span={6}>
-            <div>
-              <strong>Weight</strong>
-            </div>
-            <p>{pokemonDetail.weight}</p>
-          </Col>
-          <Col span={6}>
-            <div>
-              <strong>Height</strong>
-            </div>
-            <p>{pokemonDetail.height}</p>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={6}>
-            <div>
-              <strong>Habitat</strong>
-            </div>
-            <p>{pokemonDetail.habitat.name}</p>
-          </Col>
-        </Row>
-        <Row type="flex" justify="end">
-          <Button onClick={toggleModal()}>
-            Close
-          </Button>
-        </Row>
+            <p>
+              {pokemonDetail.flavor_text_entries.length 
+                  && pokemonDetail
+                    .flavor_text_entries[pokemonDetail.flavor_text_entries.length - 1]
+                    .flavor_text
+              }
+            </p>
+          </Row>
+          <Row>
+            <Col span={6}>
+              <div>
+                <strong>Color</strong>
+              </div>
+              <p>{pokemonDetail.color.name}</p>
+            </Col>
+            <Col span={6}>
+              <div>
+                <strong>Shape</strong>
+              </div>
+              <p>{pokemonDetail.shape.name}</p>
+            </Col>
+            <Col span={6}>
+              <div>
+                <strong>Weight</strong>
+              </div>
+              <p>{pokemonDetail.weight}</p>
+            </Col>
+            <Col span={6}>
+              <div>
+                <strong>Height</strong>
+              </div>
+              <p>{pokemonDetail.height}</p>
+            </Col>
+          </Row>
+          <Row>
+            <Col span={6}>
+              <div>
+                <strong>Habitat</strong>
+              </div>
+              <p>{pokemonDetail.habitat.name}</p>
+            </Col>
+          </Row>
+          <Row type="flex" justify="end">
+            <Button onClick={toggleModal()}>
+              Close
+            </Button>
+          </Row>
+        </Skeleton>
       </Row>
     </Modal>
   );

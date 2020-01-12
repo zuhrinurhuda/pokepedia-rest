@@ -9,16 +9,15 @@ const PokemonCard = props => {
     pokemon,
     toggleModal
   } = props;
-  console.log('isLoading', isLoading);
+
   return (
     <Card
       hoverable
       key={pokemon.id}
       loading={isLoading}
       cover={
-        isLoading
-          ? 'Loading'
-          : <img alt={pokemon.name} src={pokemon.image} />
+        !isLoading &&
+          <img alt={pokemon.name} src={pokemon.image} />
       }
       bodyStyle={{
         borderTop: '1px solid #ebedf0',

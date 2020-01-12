@@ -15,7 +15,12 @@ function App() {
           <img src={logo} alt="Pokemon Logo" height={54} />
         </Row>
       </Header>
-      <Content style={{ padding: '64px 50px', margin: 0, background: `url(${containerBg})`  }}>
+      <Content
+        style={{
+          padding: '64px 50px 24px',
+          margin: 0,
+          background: `url(${containerBg})`,
+        }}>
         <PokemonList />
       </Content>
     </Layout>
