@@ -12,13 +12,21 @@ import {
 export const initialState = {
   pokemonList: {
     isLoading: false,
-    data: [],
-    previous: null,
-    next: null,
+    results: [],
   },
+  pokemonSpecies: [],
   pokemonDetail: {
     isLoading: false,
-    data: {},
+    flavor_text_entries: [],
+    color: {
+      name: '',
+    },
+    habitat: {
+      name: '',
+    },
+    shape: {
+      name: '',
+    }
   },
 };
 
@@ -27,13 +35,12 @@ const pokemonReducers = (state = initialState, action) =>
     switch(action.type) {
       // Pokemon list reducers
       case POKEMON_LIST_REQUESTED:
-        draft.pokemonList.isLoading = false;
+        draft.pokemonList.isLoading = true;
         break;
       case POKEMON_LIST_SUCCEEDED:
         draft.pokemonList.isLoading = false;
-        draft.pokemonList.data = action.data.results;
-        draft.pokemonList.previous = action.data.previous;
-        draft.pokemonList.next = action.data.next;
+        draft.pokemonList = { ...action.data.pokemonList };
+        draft.pokemonSpecies = action.data.pokemonSpecies;
         break;
       case POKEMON_LIST_FAILED:
         draft.pokemonList.isLoading = false;
@@ -41,11 +48,11 @@ const pokemonReducers = (state = initialState, action) =>
 
       // Pokemon detail reducers
       case POKEMON_DETAIL_REQUESTED:
-        draft.pokemonDetail.isLoading = false;
+        draft.pokemonDetail.isLoading = true;
         break;
       case POKEMON_DETAIL_SUCCEEDED:
         draft.pokemonDetail.isLoading = false;
-        draft.pokemonDetail.data = action.data;
+        draft.pokemonDetail = { ...action.data };
         break;
       case POKEMON_DETAIL_FAILED:
         draft.pokemonDetail.isLoading = false;
