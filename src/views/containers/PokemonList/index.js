@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Col, Button, Icon } from 'antd';
+import { Row, Button, Icon } from 'antd';
 import { createStructuredSelector } from 'reselect';
 
 import {
@@ -13,6 +13,10 @@ import {
   pokemonDetailRequested,
 } from 'state/redux/pokemon/actions';
 import pokemonPageSelector from 'state/redux/pokemon/selectors';
+import {
+  PokemonListWrapper,
+  PokemonCardWrapper
+} from './styles';
 
 const columnGrid = {
   xs: 24,
@@ -65,21 +69,14 @@ const PokemonList = props => {
 
   return (
     <>
-      <Row
+      <PokemonListWrapper
         type="flex"
         justify="start"
         gutter={24}
-        style={{
-          padding: '12px 0',
-        }}
       >
         {pokemonList.results.map(pokemon => (
-          <Col
+          <PokemonCardWrapper
             key={pokemon.id}
-            style={{
-              paddingTop: 12,
-              paddingBottom: 12,
-            }}
             {...columnGrid}
           >
             <PokemonCard
@@ -87,14 +84,14 @@ const PokemonList = props => {
               pokemon={pokemon}
               toggleModal={toggleModal(pokemon.id)}
             />
-          </Col>
+          </PokemonCardWrapper>
         ))}
         <PokemonDetail
           isOpen={isOpen}
           toggleModal={toggleModal}
           pokemonDetail={pokemonDetail}
         />
-      </Row>
+      </PokemonListWrapper>
       <Row type="flex" justify="space-between">
         <Button
           onClick={handleBackward}

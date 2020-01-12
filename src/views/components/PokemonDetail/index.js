@@ -8,9 +8,11 @@ import {
   Typography,
   Button,
   Skeleton,
+  Tag,
 } from 'antd';
 
-import bodyBg from 'assets/images/body_bg.png';
+import habitatColors from 'utils/habitatColors';
+import { DetailCover } from './styles';
 
 const PokemonDetail = props => {
   const {
@@ -27,13 +29,9 @@ const PokemonDetail = props => {
       footer={null}
       bodyStyle={{ padding: 0 }}
     >
-      <Row
+      <DetailCover
         type="flex"
         align="middle"
-        style={{
-          flexDirection: 'column',
-          background: `url(${bodyBg})`,
-        }}
       >
         <Avatar
           src={
@@ -50,7 +48,7 @@ const PokemonDetail = props => {
             : pokemonDetail.name
           }
         </Typography.Title>
-      </Row>
+      </DetailCover>
       <Row style={{ padding: 24 }}>
         <Skeleton
           active
@@ -64,9 +62,9 @@ const PokemonDetail = props => {
             </div>
             <p>
               {pokemonDetail.flavor_text_entries.length 
-                  && pokemonDetail
-                    .flavor_text_entries[pokemonDetail.flavor_text_entries.length - 1]
-                    .flavor_text
+                && pokemonDetail
+                  .flavor_text_entries[pokemonDetail.flavor_text_entries.length - 1]
+                  .flavor_text
               }
             </p>
           </Row>
@@ -101,7 +99,11 @@ const PokemonDetail = props => {
               <div>
                 <strong>Habitat</strong>
               </div>
-              <p>{pokemonDetail.habitat.name}</p>
+              <p>
+                <Tag color={habitatColors[pokemonDetail.habitat.name]}>
+                  {pokemonDetail.habitat.name}
+                </Tag>
+              </p>
             </Col>
           </Row>
           <Row type="flex" justify="end">

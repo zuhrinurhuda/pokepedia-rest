@@ -36,6 +36,7 @@ export const newPokemonlistSelector = createSelector(
         id: Number(id),
         image: `${process.env.REACT_APP_IMAGE_URL}${id}.png`,
         habitat: pokemonSpecies[index].habitat.name,
+        color: pokemonSpecies[index].color.name,
       }
     })
   },
