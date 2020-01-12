@@ -4,7 +4,10 @@ import PropTypes from 'prop-types';
 import { Card } from 'antd';
 
 const PokemonCard = props => {
-  const { pokemon, toggleModal } = props;
+  const {
+    pokemon,
+    toggleModal
+  } = props;
 
   return (
     <Card
