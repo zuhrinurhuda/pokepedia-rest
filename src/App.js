@@ -1,21 +1,27 @@
 import React from 'react';
-import { Layout, Typography } from 'antd';
+import { Row } from 'antd';
 
-import PokemonList from 'containers/PokemonList';
+import logo from 'assets/images/pokemon_logo.png'
+import PokemonList from 'views/containers/PokemonList';
 
-const { Header, Content } = Layout;
-const { Title } = Typography;
+import {
+  StyledLayout,
+  StyledHeader,
+  StyledContent
+} from './styles';
 
 function App() {
   return (
-    <Layout>
-      <Header style={{ position: 'fixed', zIndex: 1, width: '100%' }}>
-        <Title>POKEPEDIA</Title>
-      </Header>
-      <Content style={{ margin: '0 50px', marginTop: 64  }}>
+    <StyledLayout>
+      <StyledHeader>
+        <Row type="flex" justify="center">
+          <img src={logo} alt="Pokemon Logo" height={54} />
+        </Row>
+      </StyledHeader>
+      <StyledContent>
         <PokemonList />
-      </Content>
-    </Layout>
+      </StyledContent>
+    </StyledLayout>
   );
 }
 
