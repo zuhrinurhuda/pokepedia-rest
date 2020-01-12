@@ -1,5 +1,5 @@
 export const POKEMON = {
   LIST: 'pokemon',
-  DETAIL: 'pokemon/:id',
+  DETAIL: 'pokemon/',
   SPECIES: 'pokemon-species/',
 };

@@ -14,7 +14,7 @@ const PokemonList = props => {
 
   useEffect(() => {
     fetchPokemonList({ limit: 18 });
-  }, []);
+  }, [fetchPokemonList]);
 
   return (
     <Row
@@ -52,7 +52,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = dispatch => ({
   fetchPokemonList: params => dispatch(pokemonListRequested(params)),
-})
+});
 
 PokemonList.propsTypes = {
   fetchPokemonList: PropTypes.func.isRequired,

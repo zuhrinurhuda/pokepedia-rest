@@ -12,7 +12,7 @@ export const initialState = {
     data: [],
     previous: null,
     next: null,
-  }
+  },
 };
 
 const pokemonReducers = (state = initialState, action) => 

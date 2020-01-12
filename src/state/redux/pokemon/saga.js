@@ -1,6 +1,7 @@
-import { call, put, takeLatest } from 'redux-saga/effects';
+import { call, put, takeLatest, all } from 'redux-saga/effects';
 
-import { pokemonListApi } from 'state/api/pokemon';
+import getPokemonId from 'utils/getPokemonId';
+import { pokemonListApi, pokemonSpeciesApi } from 'state/api/pokemon';
 import { POKEMON_LIST_REQUESTED } from './constants';
 import {
   pokemonListSucceeded,
@@ -9,11 +10,24 @@ import {
 
 export function* fetchPokemonList({ params }) {
   try {
-    const data = yield call(pokemonListApi, params);
-    yield put(pokemonListSucceeded(data));
+    const pokemonList = yield call(pokemonListApi, params);
+    const pokemonSpecies = yield all(
+      pokemonList.results.map(pokemon => {
+        return call(pokemonSpeciesApi, getPokemonId(pokemon.url))
+      })
+    )
+    const newResults = pokemonList.results.map((pokemon, index) => ({
+      ...pokemon,
+      habitat: pokemonSpecies[index].habitat.name,
+    }));
+
+    yield put(pokemonListSucceeded({
+      ...pokemonList,
+      results: newResults,
+    }));
   } catch (error) {
     yield put(pokemonListfailed(error));
-  }
+  };
 };
 
 export const pokemonSaga = [

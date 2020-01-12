@@ -29,6 +29,6 @@ const pokemonPageSelector = () =>
         data: pokemonList,
       },
     }),
-  )
+  );
 
 export default pokemonPageSelector;
