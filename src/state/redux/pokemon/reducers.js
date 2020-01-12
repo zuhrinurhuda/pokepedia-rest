@@ -38,8 +38,11 @@ const pokemonReducers = (state = initialState, action) =>
         draft.pokemonList.isLoading = true;
         break;
       case POKEMON_LIST_SUCCEEDED:
-        draft.pokemonList.isLoading = false;
-        draft.pokemonList = { ...action.data.pokemonList };
+        draft.pokemonList = {
+          ...state.pokemonList,
+          ...action.data.pokemonList,
+          isLoading: false
+        };
         draft.pokemonSpecies = action.data.pokemonSpecies;
         break;
       case POKEMON_LIST_FAILED:
@@ -51,8 +54,11 @@ const pokemonReducers = (state = initialState, action) =>
         draft.pokemonDetail.isLoading = true;
         break;
       case POKEMON_DETAIL_SUCCEEDED:
-        draft.pokemonDetail.isLoading = false;
-        draft.pokemonDetail = { ...action.data };
+        draft.pokemonDetail = {
+          ...state.pokemonDetail,
+          ...action.data,
+          isLoading: false,
+        };
         break;
       case POKEMON_DETAIL_FAILED:
         draft.pokemonDetail.isLoading = false;

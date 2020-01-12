@@ -7,7 +7,7 @@ import { createStructuredSelector } from 'reselect';
 import {
   PokemonCard,
   PokemonDetail,
-} from 'components';
+} from 'views/components';
 import {
   pokemonListRequested,
   pokemonDetailRequested,
@@ -34,7 +34,7 @@ const PokemonList = props => {
     pokemonDetail
   } = pokemon;
   const [isOpen, setIsOpen] = useState(false);
-  // console.log('props', props);
+  console.log('props', props.pokemon.pokemonList.isLoading);
   useEffect(() => {
     fetchPokemonList({ limit: 18 });
   }, [fetchPokemonList]);
@@ -66,6 +66,7 @@ const PokemonList = props => {
           {...columnGrid}
         >
           <PokemonCard
+            isLoading={pokemonList.isLoading}
             pokemon={pokemon}
             toggleModal={toggleModal(pokemon.id)}
           />

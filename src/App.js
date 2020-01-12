@@ -3,7 +3,7 @@ import { Layout, Row } from 'antd';
 
 import logo from 'assets/images/pokemon_logo.png'
 import containerBg from 'assets/images/container_bg.png'
-import PokemonList from 'containers/PokemonList';
+import PokemonList from 'views/containers/PokemonList';
 
 const { Header, Content } = Layout;
 

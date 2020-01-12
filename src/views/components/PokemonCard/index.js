@@ -5,17 +5,20 @@ import { Card } from 'antd';
 
 const PokemonCard = props => {
   const {
+    isLoading,
     pokemon,
     toggleModal
   } = props;
-
+  console.log('isLoading', isLoading);
   return (
     <Card
       hoverable
       key={pokemon.id}
-      loading={pokemon.isLoading}
+      loading={isLoading}
       cover={
-        <img alt={pokemon.name} src={pokemon.image} />
+        isLoading
+          ? 'Loading'
+          : <img alt={pokemon.name} src={pokemon.image} />
       }
       bodyStyle={{
         borderTop: '1px solid #ebedf0',
@@ -31,6 +34,7 @@ const PokemonCard = props => {
 };
 
 PokemonCard.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
   pokemon: PropTypes.objectOf(PropTypes.any).isRequired,
   toggleModal: PropTypes.func.isRequired,
 };
