@@ -4,6 +4,9 @@ import {
   POKEMON_LIST_REQUESTED,
   POKEMON_LIST_SUCCEEDED,
   POKEMON_LIST_FAILED,
+  POKEMON_DETAIL_REQUESTED,
+  POKEMON_DETAIL_SUCCEEDED,
+  POKEMON_DETAIL_FAILED,
 } from './constants';
 
 export const initialState = {
@@ -13,11 +16,16 @@ export const initialState = {
     previous: null,
     next: null,
   },
+  pokemonDetail: {
+    isLoading: false,
+    data: {},
+  },
 };
 
 const pokemonReducers = (state = initialState, action) => 
   produce(state, draft => {
     switch(action.type) {
+      // Pokemon list reducers
       case POKEMON_LIST_REQUESTED:
         draft.pokemonList.isLoading = false;
         break;
@@ -29,6 +37,18 @@ const pokemonReducers = (state = initialState, action) =>
         break;
       case POKEMON_LIST_FAILED:
         draft.pokemonList.isLoading = false;
+        break;
+
+      // Pokemon detail reducers
+      case POKEMON_DETAIL_REQUESTED:
+        draft.pokemonDetail.isLoading = false;
+        break;
+      case POKEMON_DETAIL_SUCCEEDED:
+        draft.pokemonDetail.isLoading = false;
+        draft.pokemonDetail.data = action.data;
+        break;
+      case POKEMON_DETAIL_FAILED:
+        draft.pokemonDetail.isLoading = false;
         break;
       default:
         return draft;

@@ -18,3 +18,12 @@ export const pokemonSpeciesApi = async id => {
     throw error;
   };
 };
+
+export const pokemonDetailApi = async id => {
+  try {
+    const { data } = await axios(`${POKEMON.DETAIL}${id}`);
+    return data;
+  } catch (error) {
+    throw error;
+  };
+};
