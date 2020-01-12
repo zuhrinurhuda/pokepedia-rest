@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import { Card } from 'antd';
 
 const PokemonCard = props => {
-  const { pokemon } = props;
+  const { pokemon, toggleModal } = props;
 
   return (
     <Card
@@ -17,6 +17,7 @@ const PokemonCard = props => {
       bodyStyle={{
         borderTop: '1px solid #ebedf0',
       }}
+      onClick={toggleModal}
     >
       <Card.Meta
         title={pokemon.name.toLocaleUpperCase()}
@@ -28,6 +29,7 @@ const PokemonCard = props => {
 
 PokemonCard.propTypes = {
   pokemon: PropTypes.objectOf(PropTypes.any).isRequired,
+  toggleModal: PropTypes.func.isRequired,
 };
 
 export default PokemonCard;
