@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Row, Col } from 'antd';
+import { Row, Col, Button, Icon } from 'antd';
 import { createStructuredSelector } from 'reselect';
 
 import {
@@ -34,10 +34,10 @@ const PokemonList = props => {
     pokemonDetail
   } = pokemon;
   const [isOpen, setIsOpen] = useState(false);
-  console.log('props', props.pokemon.pokemonList.isLoading);
+  // console.log('props', props);
   useEffect(() => {
-    fetchPokemonList({ limit: 18 });
-  }, [fetchPokemonList]);
+    fetchPokemonList(pokemonList.params);
+  }, [fetchPokemonList, pokemonList.params]);
 
   const toggleModal = id => () => {
     setIsOpen(!isOpen);
@@ -47,37 +47,68 @@ const PokemonList = props => {
     }
   };
 
+  const handleBackward = () => {
+    if (pokemonList.params.offset) {
+      fetchPokemonList({
+        ...pokemonList.params,
+        offset: pokemonList.params.offset - pokemonList.params.limit
+      })
+    }
+  };
+
+  const handleForward = () => {
+    fetchPokemonList({
+      ...pokemonList.params,
+      offset: pokemonList.params.offset + pokemonList.params.limit
+    })
+  };
+
   return (
-    <Row
-      type="flex"
-      justify="start"
-      gutter={24}
-      style={{
-        padding: '12px 0',
-      }}
-    >
-      {pokemonList.results.map(pokemon => (
-        <Col
-          key={pokemon.id}
-          style={{
-            paddingTop: 12,
-            paddingBottom: 12,
-          }}
-          {...columnGrid}
+    <>
+      <Row
+        type="flex"
+        justify="start"
+        gutter={24}
+        style={{
+          padding: '12px 0',
+        }}
+      >
+        {pokemonList.results.map(pokemon => (
+          <Col
+            key={pokemon.id}
+            style={{
+              paddingTop: 12,
+              paddingBottom: 12,
+            }}
+            {...columnGrid}
+          >
+            <PokemonCard
+              isLoading={pokemonList.isLoading}
+              pokemon={pokemon}
+              toggleModal={toggleModal(pokemon.id)}
+            />
+          </Col>
+        ))}
+        <PokemonDetail
+          isOpen={isOpen}
+          toggleModal={toggleModal}
+          pokemonDetail={pokemonDetail}
+        />
+      </Row>
+      <Row type="flex" justify="space-between">
+        <Button
+          onClick={handleBackward}
+          disabled={!pokemonList.params.offset}
         >
-          <PokemonCard
-            isLoading={pokemonList.isLoading}
-            pokemon={pokemon}
-            toggleModal={toggleModal(pokemon.id)}
-          />
-        </Col>
-      ))}
-      <PokemonDetail
-        isOpen={isOpen}
-        toggleModal={toggleModal}
-        pokemonDetail={pokemonDetail}
-      />
-    </Row>
+          <Icon type="backward" />
+          Prev
+        </Button>
+        <Button onClick={handleForward}>
+          Next
+          <Icon type="forward" />
+        </Button>
+      </Row>
+    </>
   );
 };
 

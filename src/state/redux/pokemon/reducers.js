@@ -11,6 +11,10 @@ import {
 
 export const initialState = {
   pokemonList: {
+    params: {
+      limit: 18,
+      offset: 0,
+    },
     isLoading: false,
     results: [],
   },
@@ -35,6 +39,7 @@ const pokemonReducers = (state = initialState, action) =>
     switch(action.type) {
       // Pokemon list reducers
       case POKEMON_LIST_REQUESTED:
+        draft.pokemonList.params = action.params;
         draft.pokemonList.isLoading = true;
         break;
       case POKEMON_LIST_SUCCEEDED:
