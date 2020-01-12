@@ -24,15 +24,8 @@ export function* fetchPokemonList({ params }) {
       pokemonList.results.map(pokemon =>
         call(pokemonSpeciesApi, getPokemonId(pokemon.url)))
     )
-    const newResults = pokemonList.results.map((pokemon, index) => ({
-      ...pokemon,
-      habitat: pokemonSpecies[index].habitat.name,
-    }));
 
-    yield put(pokemonListSucceeded({
-      ...pokemonList,
-      results: newResults,
-    }));
+    yield put(pokemonListSucceeded({ pokemonList, pokemonSpecies }));
   } catch (error) {
     yield put(pokemonListfailed(error));
   };
@@ -41,7 +34,6 @@ export function* fetchPokemonList({ params }) {
 export function* fetchPokemonDetail({ id }) {
   try {
     const pokemonDetail = yield call(pokemonDetailApi, id);
-    console.log('saga response', pokemonDetail);
     yield put(pokemonDetailSucceeded(pokemonDetail));
   } catch (error) {
     yield put(pokemonDetailfailed(error));
